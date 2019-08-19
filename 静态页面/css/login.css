@@ -23,38 +23,41 @@
   width: 60%;
   text-align: center;
 }
-#login .logo {
+#login .content {
+  width: 100%;
+}
+#login .content .logo {
   width: 100%;
   padding: 30px 0;
   text-align: center;
 }
-#login .logo img {
+#login .content .logo img {
   width: 96px;
   height: 30px;
 }
-#login .logincontent {
+#login .content .logincontent {
   padding: 15px;
 }
-#login .logincontent .form {
+#login .content .logincontent .form {
   width: 100%;
 }
-#login .logincontent .form input[type='text'] {
+#login .content .logincontent .form input[type='text'] {
   height: 50px;
 }
-#login .logincontent .form .phone {
+#login .content .logincontent .form .phone {
   border-bottom: 1px solid #eee;
 }
-#login .logincontent .form .phone input {
+#login .content .logincontent .form .phone input {
   width: 290px;
   font-size: 15px;
 }
-#login .logincontent .form .getcode {
+#login .content .logincontent .form .getcode {
   border-bottom: 1px solid #eee;
 }
-#login .logincontent .form .getcode input {
+#login .content .logincontent .form .getcode input {
   width: 190px;
 }
-#login .logincontent .form .getcode span {
+#login .content .logincontent .form .getcode span {
   margin-left: 50px;
   font-size: 14px;
   display: inline-block;
@@ -62,25 +65,25 @@
   border: 1px solid #eee;
   border-radius: 5px;
 }
-#login .logincontent .commit {
+#login .content .logincontent .commit {
   width: 100%;
 }
-#login .logincontent .commit .first-p {
+#login .content .logincontent .commit .first-p {
   width: 100%;
   height: 50px;
   line-height: 50px;
 }
-#login .logincontent .commit .first-p span {
+#login .content .logincontent .commit .first-p span {
   font-size: 14px;
 }
-#login .logincontent .commit .first-p span:first-child {
+#login .content .logincontent .commit .first-p span:first-child {
   float: left;
   color: #c0c0c0;
 }
-#login .logincontent .commit .first-p span:last-child {
+#login .content .logincontent .commit .first-p span:last-child {
   float: right;
 }
-#login .logincontent .commit .btn {
+#login .content .logincontent .commit .btn {
   width: 100%;
   height: 40px;
   border-radius: 6px;
@@ -89,12 +92,42 @@
   font-size: 20px;
   color: #fff;
 }
-#login .logincontent .commit .last-p {
+#login .content .logincontent .commit .last-p {
   width: 100%;
   padding: 10px 0;
+  font-size: 14px;
 }
-#login .logincontent .otherlogin {
+#login .content .logincontent .otherlogin {
   width: 100%;
   padding-top: 30px;
   text-align: center;
+  font-size: 14px;
+}
+#login .loginway .logo {
+  width: 100%;
+  height: 240px;
+  text-align: center;
+  line-height: 240px;
+}
+#login .loginway .logo img {
+  width: 133px;
+  height: 45px;
+}
+#login .loginway .selectway {
+  width: 335px;
+  height: 47px;
+  margin: 5px auto;
+  text-align: center;
+  line-height: 47px;
+  border: 1px solid #f00;
+  font-size: 14px;
+}
+#login .loginway .loginphone {
+  background: #f00;
+  color: #fff;
+  font-weight: bold;
+}
+#login .loginway .loginemail {
+  background: #fff;
+  color: #f00;
 }

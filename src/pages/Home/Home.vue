@@ -5,14 +5,15 @@
         <div class="homeHeader">
             <div class="homeHeader-top">
                 <a class="headerTitle" href="javascript:;">网易严选</a>
-                <div class="toSearch">
+                <div class="toSearch" @click="$router.push('/search')">
                   <i class="iconfont icon-sousuo"></i>
                   <span class="searchProduct">搜索商品，共21625款好物</span>
                 </div>
              </div>
              <div class="homeHeader-bottom">
-                <ul class="headerTab">
-                  <li class="tabItem active"><span>推荐</span></li>
+                <div class="warpper">
+                  <ul class="headerTab">
+                  <li class="tabItem" :class="{active:isactive}"><span>推荐</span></li>
                   <li class="tabItem"><span>居家生活</span></li>
                   <li class="tabItem"><span>服饰鞋包</span></li>
                   <li class="tabItem"><span>美食酒水</span></li>
@@ -22,12 +23,13 @@
                   <li class="tabItem"><span>数码家电</span></li>
                   <li class="tabItem"><span>数码家电</span></li>
                 </ul>
-                <span class="icon">
-                  <i class="iconfont icon-jiantou8" style="display: none"></i>
-                  <i class="iconfont icon-ico_back"></i>
+                </div>
+                <span class="icon" @click="showlist">
+                  <i class="iconfont icon-jiantou8" v-show="!isshow"></i>
+                  <i class="iconfont icon-ico_back" v-show="isshow"></i>
                 </span>
                 <!-- 全部Tab列表页 -->
-                <div class="alltablist" style="display: none" >
+                <div class="alltablist" v-show="isshow">
                   <span class="alltablist-title">
                     全部频道
                   </span>
@@ -47,7 +49,7 @@
              </div>
         </div>
         <!-- 遮罩层 -->
-        <div class="mask" style="display: none"></div>
+        <div class="mask" v-show="isshow"></div>
 
 
             <!-- home页主内容区 -->
@@ -321,7 +323,39 @@
 </template>
 
 <script>
+import BScroll from "better-scroll"
   export default {
+    data(){
+      return{
+        isshow:false,// 标识变量，切换全部频道列表的显示隐藏，默认为false
+        isactive:true //标识变量，点击当前项显示下划线，
+      }
+    },
+    mounted(){
+      this.getwidth()
+      // console.log(this.getwidth())
+      if(this.getwidth()){
+        let scroll = new BScroll(".warpper",{
+        scrollX: true,
+        click:true
+      })
+      }
+      
+    },
+    methods:{
+      showlist(){
+        this.isshow = !this.isshow
+      },
+      
+      //动态获取头部ul的宽度的方法
+      getwidth(){
+        let ulnode = document.querySelector(".headerTab")
+        let linode = ulnode.querySelectorAll(".tabItem")
+        let width  = linode[0].clientWidth*linode.length
+        ulnode.style.width =width + 'px'
+        return width
+      }
+    }
   }
 </script>
 
@@ -367,22 +401,31 @@
         height 40px
         display flex
         background #fff
-        .headerTab
-          display flex
-          align-items center
-          height 40px
+        .warpper
           width 80%
-          white-space nowrap
           overflow hidden
-          .tabItem
+          // white-space nowrap
+
+          .headerTab
+            // display flex
+            align-items center
             height 40px
-            box-sizing border-box
-            margin 0 15px
-            font-size 15px
-            line-height 40px
-            &.active
-              color red
-              border-bottom 2px solid red
+            // width 780px
+            white-space nowrap
+            // overflow hidden
+            .tabItem
+              float left
+              height 40px
+              padding 0 20px
+              white-space nowrap
+
+              box-sizing border-box
+              // margin 0 15px
+              font-size 15px
+              line-height 40px
+              &.active
+                color red
+                border-bottom 2px solid red
         .icon         
           // float right
           // position relative

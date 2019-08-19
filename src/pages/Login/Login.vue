@@ -1,30 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
-    <!-- <link rel="icon" href="<%= BASE_URL %>favicon.ico"> -->
-    <link rel="stylesheet" href="./css/reset.css">
-    <link rel="stylesheet" href="./css/login.css">
-    <link rel="stylesheet" href="//at.alicdn.com/t/font_1356527_a3c51avxqio.css">
-    <title>vue-yx-project</title>
-    <style>
-      html,body{
-        width:100%;
-        height:100%;
-      }
-      /* 模拟屏幕区域 */
-      #app{
-        width:100%;
-        height: 100%;
-        /* overflow: hidden; */
-      }
-    </style>
-  </head>
-  <body>
-    <div id="app">
-     <div id="login">
+<template>
+  <div id="login">
        <div class="header">
          <i class="iconfont icon-zhuye icon"></i>
          <span>网易严选</span>
@@ -98,6 +73,121 @@
        </div>
 
        </div>
-    </div>
-  </body>
-</html>
+</template>
+
+<script>
+  export default {
+  }
+</script>
+
+<style lang="stylus" rel="stylesheet/stylus" scoped>
+  #login
+    width 100%
+    height 100%
+    .header
+      width 100%
+      height 40px
+      background #F5F5F5
+      font-size 20px
+      line-height 40px
+      padding 0 10px
+      display flex
+      box-sizing border-box
+
+      .icon  
+        font-size 25px
+        width 20%
+        i
+          font-size 25px
+      span 
+        width 60%
+        text-align center
+    .content
+      width 100%
+      .logo
+        width 100%
+        padding 30px 0
+        text-align center
+        img 
+          width 96px 
+          height 30px
+          
+      .logincontent
+        padding 15px
+        .form
+          width 100%
+          input[type='text'] 
+            height 50px
+          .phone
+            border-bottom 1px solid #eee
+            input 
+              width 290px
+              font-size 15px
+          .getcode
+            border-bottom 1px solid #eee
+            input 
+              width 190px
+            span 
+              margin-left 50px
+              font-size 14px
+              display inline-block
+              padding 6px
+              border 1px solid #eeeeee
+              border-radius 5px
+        .commit
+          width 100%
+          .first-p
+            width 100%
+            height 50px
+            line-height 50px
+            span 
+              font-size 14px
+              &:first-child
+                float left
+                color #C0C0C0
+              &:last-child
+                float right
+          .btn
+            width 100%
+            height 40px
+            border-radius 6px
+            background red
+            border 0px
+            font-size 20px
+            color #fff
+          .last-p
+            width 100%
+            padding 10px 0
+            font-size 14px
+        .otherlogin
+          width 100%
+          padding-top 30px
+          text-align center
+          font-size 14px
+    .loginway
+      .logo
+        width 100%
+        height 240px
+        text-align center
+        line-height 240px
+        img 
+          width 133px
+          height 45px
+      .selectway
+        width 335px
+        height 47px
+        margin 5px auto
+        text-align center
+        line-height 47px
+        border 1px solid red
+        font-size 14px
+      .loginphone
+        background red
+        color #ffffff
+        font-weight bold
+      .loginemail
+        background #ffffff
+        color red
+
+  
+</style>
