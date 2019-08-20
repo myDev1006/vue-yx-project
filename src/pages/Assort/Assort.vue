@@ -8,7 +8,7 @@
         </div>
         <div class="content">
             <div class="leftlist">
-                <ul class="list">
+                <ul class="list" ref="listNode">
                   <li class="item"><span>推荐专区</span></li>
                   <li class="item"><span>夏凉专区</span></li>
                   <li class="item"><span>爆品专区</span></li>
@@ -74,13 +74,38 @@
 </template>
 
 <script>
+import BScroll from "better-scroll"
   export default {
+    mounted(){
+      this.$nextTick(()=>{
+        let scroll = new BScroll('.leftlist',{
+          scrollY: true,
+          click: true
+      })
+      })
+      this.getHeight()
+    },
+    methods:{
+      getHeight(){
+        //获取滑动列表的高度
+        let ulNode = this.$refs.listNode
+        //获取他所有的子元素li
+        let liNodes = ulNode.children
+        let height = 0
+        Array.prototype.forEach.call(liNodes,(item)=>{
+          height+=item.clientHeight
+        })
+        ulNode.style.height = height+"px"
+        return height
+      }
+    }
   }
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus" scoped>
   .assort
     width 100%
+    height 100%
     .header
       width 100%
       height 50px
@@ -97,9 +122,16 @@
         line-height 30px
     .content
       width 100%
+      // height 100%
       display flex
+      // padding-bottom 50px
+      // overflow hidden
       .leftlist
+        // float left
         width 30%
+        // height 100%
+        // height 70%
+        // overflow hidden
         .list
           width 100%
           padding 20px 0
@@ -110,6 +142,7 @@
       .rightlist
         width 70%
         padding 10px
+        // float right
         .headerImg
           width 100%
           img 

@@ -2,6 +2,7 @@ import Vue from "vue"
 import App from "./App.vue"
 import router from "./router/index"
 import FooterNav from "./components/FooterNav/FooterNav.vue"
+import "./mock/mock-server"//引入mock模拟接口
 Vue.component("FooterNav",FooterNav)//注册全局组件
 import "lib-flexible/flexible"
 

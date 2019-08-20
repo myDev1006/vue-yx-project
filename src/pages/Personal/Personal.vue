@@ -23,14 +23,23 @@
               <li class="item"><i class="iconfont icon-tubiaolunkuo-"></i><span>会员中心</span></li>
             </ul>
           </div>
-          <div class="loginout">
+          <div class="loginout" @click="loginout">
             退出登录
           </div>
       </div>
 </template>
 
 <script>
+import {MessageBox} from "mint-ui"
   export default {
+    methods:{
+      loginout(){
+        MessageBox.confirm("确定退出吗？").then(()=>{
+          this.$router.replace('/login')
+        }
+        ,()=>{})
+      }
+    }
   }
 </script>
 

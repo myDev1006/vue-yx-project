@@ -2,12 +2,12 @@
   <div class="scan">
     <div class="header">
         <div class="header-top">
-          <i class="iconfont icon-zhuye icon"></i>
+          <i class="iconfont icon-zhuye icon" @click="$router.replace('/home')"></i>
         <span>发现</span>
         <span>甄选家</span>
         <div class="iconright">
-            <i class="iconfont icon-sousuo"></i>
-            <i class="iconfont icon-gouwuchekong-copy"></i>
+            <i class="iconfont icon-sousuo" @click="$router.push('/search')"></i>
+            <i class="iconfont icon-gouwuchekong-copy" @click="$router.replace('/shop')"></i>
         </div>
         </div>
         <div class="header-bottom">

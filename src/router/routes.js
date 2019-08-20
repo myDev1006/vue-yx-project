@@ -8,27 +8,36 @@ import Search from "../pages/Search/Search.vue"
 export default[
   {
     path:"/home",
-    component:Home
+    component:Home,
+    
   },
   {
     path:"/assort",
-    component:Assort
+    component:Assort,
+    
   },
+  
   {
     path:"/scan",
-    component:Scan
+    component:Scan,
+    
   },
   {
     path:"/shop",
-    component:Shop
+    component:Shop,
+    
   },
   {
     path:"/personal",
-    component:Personal
+    component:Personal,
+    
   },
   {
     path:"/login",
-    component:Login
+    component:Login,
+    meta:{
+      isshow:true//改变导航颜色
+    }
   },
   {
     path:"/search",

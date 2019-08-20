@@ -12,16 +12,16 @@
              </div>
              <div class="homeHeader-bottom">
                 <div class="warpper">
-                  <ul class="headerTab">
+                  <ul ref="ulnode" class="headerTab" @click="clickcurrent($event)">
                   <li class="tabItem" :class="{active:isactive}"><span>推荐</span></li>
-                  <li class="tabItem"><span>居家生活</span></li>
-                  <li class="tabItem"><span>服饰鞋包</span></li>
-                  <li class="tabItem"><span>美食酒水</span></li>
-                  <li class="tabItem"><span>个护清洁</span></li>
-                  <li class="tabItem"><span>母婴亲子</span></li>
-                  <li class="tabItem"><span>运动旅行</span></li>
-                  <li class="tabItem"><span>数码家电</span></li>
-                  <li class="tabItem"><span>数码家电</span></li>
+                  <li class="tabItem" :class="{active:!isactive}"><span>居家生活</span></li>
+                  <li class="tabItem" :class="{active:!isactive}"><span>服饰鞋包</span></li>
+                  <li class="tabItem" :class="{active:!isactive}"><span>美食酒水</span></li>
+                  <li class="tabItem" :class="{active:!isactive}"><span>个护清洁</span></li>
+                  <li class="tabItem" :class="{active:!isactive}"><span>母婴亲子</span></li>
+                  <li class="tabItem" :class="{active:!isactive}"><span>运动旅行</span></li>
+                  <li class="tabItem" :class="{active:!isactive}"><span>数码家电</span></li>
+                  <li class="tabItem" :class="{active:!isactive}"><span>全球特色</span></li>
                 </ul>
                 </div>
                 <span class="icon" @click="showlist">
@@ -42,7 +42,7 @@
                       <li class="tabItem"><span>母婴亲子</span></li>
                       <li class="tabItem"><span>运动旅行</span></li>
                       <li class="tabItem"><span>数码家电</span></li>
-                      <li class="tabItem"><span>数码家电</span></li>
+                      <li class="tabItem"><span>全球特色</span></li>
                     </ul>
                    
                 </div>
@@ -55,24 +55,26 @@
             <!-- home页主内容区 -->
         <div class="content">
               <!-- 轮播图 -->
-            <div class="scrollImg">
-                <ul class="imglist">
-                  <li class="imgItem">
+            <div class=" swiper-container">
+                <ul class=" swiper-wrapper">
+                  <li class=" swiper-slide">
                     <img src="https://yanxuan.nosdn.127.net/82a811bf9a93fe5775fa8e702695b193.jpg?imageView&quality=75&thumbnail=750x0" alt="">
                   </li>
-                  <li class="imgItem">
+                  <li class=" swiper-slide">
                     <img src="https://yanxuan.nosdn.127.net/fca5a6400454717c5b7d6c393071b307.jpg?imageView&quality=75&thumbnail=750x0" alt="">
                   </li>
-                  <li class="imgItem">
+                  <li class=" swiper-slide">
                     <img src="https://yanxuan.nosdn.127.net/eda2f4fc108b2c1be7dd4eafe26b2daa.png?imageView&quality=75&thumbnail=750x0" alt="">
                   </li>
-                  <li class="imgItem">
+                  <li class=" swiper-slide">
                     <img src="https://yanxuan.nosdn.127.net/41206124e95bb06e5493c20c55cf9e63.jpg?imageView&quality=75&thumbnail=750x0" alt="">
                   </li>
-                  <li class="imgItem">
+                  <li class=" swiper-slide">
                     <img src="https://yanxuan.nosdn.127.net/b69d768f3cef93c13360a99c094cb5d0.jpg?imageView&quality=75&thumbnail=750x0" alt="">
                   </li>
                 </ul>
+                <!-- 分页器 -->
+                <div class="swiper-pagination"></div>
               </div>
               <div class="middleTitle">
                 <span class="bgImg1"> 网易自营品牌</span>
@@ -284,7 +286,7 @@
               <div class="options-index4">
                 <div class="bjImg"></div>
                 <div class="tablist">
-                  <ul class="listitem">
+                  <ul ref="listitemnode" class="listitem">
                     <li class="item">
                       <img src="https://yanxuan-item.nosdn.127.net/89ea5ccc1e8e09912b17c18005b6f704.png?imageView&quality=65&thumbnail=330x330" alt="">
                       <span>女式自然无缝bra短吊带</span>
@@ -324,6 +326,8 @@
 
 <script>
 import BScroll from "better-scroll"
+import Swiper from "swiper"
+import'swiper/dist/css/swiper.css'
   export default {
     data(){
       return{
@@ -339,7 +343,20 @@ import BScroll from "better-scroll"
         scrollX: true,
         click:true
       })
+        let scroll2 = new BScroll(".tablist",{
+        scrollX: true,
+        click:true
+      })
       }
+       var mySwiper = new Swiper ('.swiper-container', {
+        // direction: 'vertical', // 垂直切换选项
+        loop: true, // 循环模式选项
+        
+        // 如果需要分页器
+        pagination: {
+          el: '.swiper-pagination',
+        },
+  })        
       
     },
     methods:{
@@ -349,12 +366,33 @@ import BScroll from "better-scroll"
       
       //动态获取头部ul的宽度的方法
       getwidth(){
-        let ulnode = document.querySelector(".headerTab")
-        let linode = ulnode.querySelectorAll(".tabItem")
-        let width  = linode[0].clientWidth*linode.length
-        ulnode.style.width =width + 'px'
-        return width
-      }
+        //底部滑动列表的宽度
+        let listItemNode = this.$refs.listitemnode
+        let listChildNode = listItemNode.children
+        console.log(listChildNode)
+
+        let listItemNodeWidth = 0
+        Array.prototype.forEach.call(listChildNode,(item)=>{
+          listItemNodeWidth+=item.clientWidth
+        })
+        listItemNode.style.width =listItemNodeWidth + 'px'
+
+//头部滑动列表的宽度
+        let ulNode = this.$refs.ulnode
+        let liNode = ulNode.children
+        let ulNodeWidth = 0
+        Array.prototype.forEach.call(liNode,(item)=>{
+          ulNodeWidth+=item.clientWidth
+        })
+        ulNode.style.width =ulNodeWidth + 'px'
+        return ulNodeWidth
+      },
+      //点击当前列表项更换样式
+      // clickcurrent(e){
+      //   console.log(e)
+      //   e.target
+        
+      // }
     }
   }
 </script>
@@ -483,18 +521,30 @@ import BScroll from "better-scroll"
       // position absolute
       padding-bottom 50px
       top 0
-      .scrollImg
-        width 100%
-        height 200px
-        .imglist
-          position relative
-          .imgItem
-            position absolute
-            top 0
-            left 0
-            img 
+      .swiper-container
+        .swiper-wrapper
+          .swiper-slide
+            img
+              display block
               width 100%
               height 200px
+      //   width 100%
+      //   height 200px
+      // .scrollImg
+      //   width 100%
+      //   height 200px
+      //   img 
+      //     width 100%
+      //     height 200px
+      //   .imglist
+      //     position relative
+      //     .imgItem
+      //       position absolute
+      //       top 0
+      //       left 0
+      //       img 
+      //         width 100%
+      //         height 200px
       .middleTitle
         width 100%
         height 40px
@@ -727,17 +777,23 @@ import BScroll from "better-scroll"
         .tablist
           width 100%
           padding 10px
-          box-sizing border-box
+          // box-sizing border-box
+          overflow hidden
           .listitem
             display flex
-            width 100%
+            // width 700px
+            // white-space nowrap
+            // overflow hidden
+            // width 100%
             .item
               display flex
               flex-direction column
+              float left
               width 100px 
               height 180px
-              margin-right 10px
+              margin-right 20px
               font-size 14px
+
               img 
                 width 100px
                 height 100px

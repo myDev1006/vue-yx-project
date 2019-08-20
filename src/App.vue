@@ -1,12 +1,13 @@
 <template>
   <div>
     <router-view></router-view>
-    <FooterNav/>
+    <FooterNav v-show="$route.path != '/login'"/>
   </div>
 </template>
 
 <script>
   export default {
+    
   }
 </script>
 

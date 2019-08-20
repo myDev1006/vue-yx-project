@@ -2,23 +2,23 @@
  <!-- 底部导航 -->
         <div class="tabFooter">
           <ul class="tabBar">
-            <li>
+            <li @click="go('/home')" :class="{active:$route.path == '/home'}">
               <i class="iconfont icon-zhuye"></i>
               <span>主页</span>
             </li>
-            <li>
+            <li @click="go('/assort')" :class="{active:$route.path == '/assort'}">
               <i class="iconfont icon-icon"></i>
               <span>分类</span>
             </li>
-            <li>
+            <li @click="go('/scan')" :class="{active:$route.path == '/scan'}">
               <i class="iconfont icon-tupian1"></i>
               <span>识物</span>
             </li>           
-            <li>
+            <li @click="go('/shop')" :class="{active:$route.path == '/shop'}">
               <i class="iconfont icon-gouwuchekong"></i>
               <span>购物车</span>
             </li>
-            <li>
+            <li @click="go('/login')" :class="{active:$route.path == '/login'}">
               <i class="iconfont icon-tubiaozhizuomoban"></i>
               <span>个人</span>
             </li>
@@ -28,6 +28,19 @@
 
 <script>
   export default {
+    data(){
+      return{
+        changecolor:false
+      }
+    },
+    mounted(){
+      console.log(this.$route.meta)
+    },
+    methods:{
+      go(path){
+        this.$router.replace(path)
+      }
+    }
   }
 </script>
 
@@ -51,6 +64,9 @@
           justify-items center
           width 20%
           text-align center
+          &.active
+            color red
+        
           span
             font-size 12px
             display inline-block
