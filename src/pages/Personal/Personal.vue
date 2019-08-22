@@ -33,6 +33,7 @@
 import {MessageBox} from "mint-ui"
   export default {
     methods:{
+      //退出登录的方法
       loginout(){
         MessageBox.confirm("确定退出吗？").then(()=>{
           this.$router.replace('/login')
@@ -47,12 +48,14 @@ import {MessageBox} from "mint-ui"
   #personal
     width 100%
     height 100%
+    overflow hidden
     .header
       width 100%
       display flex
       background #DAA520
       padding 20px
       line-height 70px   
+      box-sizing border-box
       .avatar
         width 70px
         height 70px
@@ -63,6 +66,7 @@ import {MessageBox} from "mint-ui"
     .msg
       width 100%
       border-bottom 10px solid #eeeeee
+      box-sizing border-box
       p
         width 100%
         height 40px

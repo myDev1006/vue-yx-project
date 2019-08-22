@@ -5,6 +5,8 @@ import Shop from "../pages/Shop/Shop.vue"//购物车
 import Personal from "../pages/Personal/Personal.vue"//个人中心
 import Login from "../pages/Login/Login.vue"
 import Search from "../pages/Search/Search.vue"
+import Find from "../pages/Scan/Find/Find.vue"//发现页
+import SelectHome from "../pages/Scan/SelectHome/SelectHome.vue"//甄选家
 export default[
   {
     path:"/home",
@@ -20,6 +22,20 @@ export default[
   {
     path:"/scan",
     component:Scan,
+    children:[
+      {
+        path:"/scan/find",
+        component:Find
+      },
+      {
+        path:"/scan/selecthome",
+        component:SelectHome
+      },
+      {
+        path:"",
+        redirect:"/scan/find"
+      }
+    ]
     
   },
   {

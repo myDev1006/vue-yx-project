@@ -12,16 +12,11 @@
              </div>
              <div class="homeHeader-bottom">
                 <div class="warpper">
-                  <ul ref="ulnode" class="headerTab" @click="clickcurrent($event)">
-                  <li class="tabItem" :class="{active:isactive}"><span>推荐</span></li>
-                  <li class="tabItem" :class="{active:!isactive}"><span>居家生活</span></li>
-                  <li class="tabItem" :class="{active:!isactive}"><span>服饰鞋包</span></li>
-                  <li class="tabItem" :class="{active:!isactive}"><span>美食酒水</span></li>
-                  <li class="tabItem" :class="{active:!isactive}"><span>个护清洁</span></li>
-                  <li class="tabItem" :class="{active:!isactive}"><span>母婴亲子</span></li>
-                  <li class="tabItem" :class="{active:!isactive}"><span>运动旅行</span></li>
-                  <li class="tabItem" :class="{active:!isactive}"><span>数码家电</span></li>
-                  <li class="tabItem" :class="{active:!isactive}"><span>全球特色</span></li>
+                  <ul ref="ulnode" class="headerTab" >
+                  <li v-for="(item, index) in listData" :key="index" 
+                  class="tabItem" @click="clickcurrent(index)" :class='{active:currentindex == index}'>
+                  <span>{{item}}</span>
+                  </li>
                 </ul>
                 </div>
                 <span class="icon" @click="showlist">
@@ -53,7 +48,7 @@
 
 
             <!-- home页主内容区 -->
-        <div class="content">
+        <div class="content" v-if="homeData&&homeData.component1">
               <!-- 轮播图 -->
             <div class=" swiper-container">
                 <ul class=" swiper-wrapper">
@@ -77,52 +72,14 @@
                 <div class="swiper-pagination"></div>
               </div>
               <div class="middleTitle">
-                <span class="bgImg1"> 网易自营品牌</span>
-                <span class="bgImg2">30天无忧退货</span>
-                <span class="bgImg3">48小时快速退款</span>
+                <span class="bgImg1" v-for="(item, index) in homeData.policyDescList" :key="index">{{item.desc}}</span>
               </div>
 
               <div class="categorylist">
                 <ul class="listwarper">
-                  <li class="listitem">
-                    <img src="https://yanxuan.nosdn.127.net/5243a7191dd4c86b3b28859089273aa8.gif" alt="">
-                    <span>新品首发</span>
-                  </li>
-                  <li class="listitem">
-                    <img src="https://yanxuan.nosdn.127.net/fede8b110c502ec5799702d5ec824792.png" alt="">
-                    <span>居家生活</span>
-                  </li>
-                  <li class="listitem">
-                    <img src="https://yanxuan.nosdn.127.net/2415a74cea7d3f080c2dcaa791884572.png" alt="">
-                    <span>服饰鞋包</span>
-                  </li>
-                  <li class="listitem">
-                    <img src="https://yanxuan.nosdn.127.net/d916591adea776351e084016335e5820.png" alt="">
-                    <span>美食酒水</span>
-                  </li>
-                  <li class="listitem">
-                    <img src="https://yanxuan.nosdn.127.net/6c3bd9d885c818b1f73e497335a68b47.png" alt="">
-                    <span>个护清洁</span>
-                  </li>
-                  <li class="listitem">
-                    <img src="https://yanxuan.nosdn.127.net/559d2a240ec20b096590a902217009ff.png" alt="">
-                    <span>母婴亲子</span>
-                  </li>
-                  <li class="listitem">
-                    <img src="https://yanxuan.nosdn.127.net/5c088559ebcc3f0ffcda663f04dfbeb2.png" alt="">
-                    <span>运动旅行</span>
-                  </li>
-                  <li class="listitem">
-                    <img src="https://yanxuan.nosdn.127.net/fbca8e1f2948f0c09fc7672c2c125384.png" alt="">
-                    <span>数码家电</span>
-                  </li>
-                  <li class="listitem">
-                    <img src="https://yanxuan.nosdn.127.net/f7281169d4e82d5d8d52aa1fec83fe01.png" alt="">
-                    <span>全球特色</span>
-                  </li>
-                  <li class="listitem">
-                    <img src="https://yanxuan.nosdn.127.net/3954c3cbeb4359dd7007be7a076e0dda.gif" alt="">
-                    <span>超级会员</span>
+                  <li class="listitem" v-for="(item, index) in homeData.kingKongModule.kingKongList" :key="index">
+                    <img v-lazy="item.picUrl" alt="img">
+                    <span>{{item.text}}</span>
                   </li>
                 </ul>
               </div>
@@ -138,18 +95,11 @@
                     <img src="//yanxuan.nosdn.127.net/ba4d635ec94ad95b28bfab6500900659.png" alt="">
                   </div>
                   <div class="item2">
-                    <div class="item-top">
-                        <img src="https://yanxuan-item.nosdn.127.net/f33922af9863addb4845b1c93f04b012.png?imageView&thumbnail=200x200&quality=75" alt="">
+                    <div class="item-i" v-for="(item, index) in homeData.indexActivityModule" :key="index">
+                        <img :src="item.picUrl" alt="">
                           <div class="word">
-                              <span>福利社</span>
-                              <span>今日特价</span>
-                          </div>
-                        </div>
-                        <div class="item-bottom">
-                        <img src="https://yanxuan-item.nosdn.127.net/bb9025c24057dfb89403055ac5b9f85c.png?imageView&thumbnail=200x200&quality=75" alt="">
-                          <div class="word">
-                              <span>新人拼团</span>
-                              <span>一元包邮</span>
+                              <span>{{item.title}}</span>
+                              <span>{{item.subTitle}}</span>
                           </div>
                         </div>
                   </div>
@@ -190,97 +140,41 @@
               </div>
               <div class="options-index3">
                 <header class="header">
-                  类目热销榜
+                  {{homeData.categoryHotSellModule.title}}
                 </header>
                 <div class="imgitem">
                  <div class="item-top">
-                    <div class="item1 item">
+                    <div class="item1 item" v-for="(item, index) in listarr1" :key="index">
                         <div class="word">
-                         <span>热销榜</span>
+                         <span>{{item.categoryName}}</span>
                         </div>
                        </div>
-                         <div class="item2 item">
-                           <div class="word">
-                            <span>好评榜</span>
-                           </div>
-                          </div>
                  </div>
                   <div class="item-bottom">
-                      <div class="item3 item">
+                      <div class="item3 item" v-for="(item, index) in listarr2" :key="index">
                           <div class="word">
-                              <span>居家生活榜</span>
+                              <span>{{item.categoryName}}</span>
+                              <img :src="item.picUrl" alt="">
                           </div>
                         </div>
-                        <div class="item4 item">
-                          <div class="word">
-                              <span>美食酒水榜</span>
-                          </div>
-                        </div> 
-                        <div class="item5 item">
-                          <div class="word">
-                              <span>服饰鞋包榜</span>
-                          </div>
-                        </div> 
-                        <div class="item6 item">
-                          <div class="word">
-                              <span>个护清洁榜</span>
-                          </div>
-                        </div> 
-                        <div class="item7 item">
-                          <div class="word">
-                              <span>运动旅行榜</span>
-                          </div>
-                        </div> 
-                        <div class="item8 item">
-                          <div class="word">
-                              <span>数码家电榜</span>
-                          </div>
-                        </div> 
-                        <div class="item9 item">
-                          <div class="word">
-                              <span>母婴亲子榜</span>
-                          </div>
-                        </div> 
-                        <div class="item10 item">
-                          <div class="word">
-                              <span>全球特色榜</span>
-                          </div>
-                        </div> 
                   </div>                 
                 </div>
-              </div>   
-              <div class="options-index2">
+              </div>  
+               <!--限时购  -->
+              <div class="options-index5">
                   <header class="header">
                     限时购
                     <span class="time">02：00：00</span>
                     <span class="more">更多 ></span>
                   </header>
                   <div class="imgitem">
-                    <div class="item1 item">
+                    <div class="item1 item" v-for="(item, index) in homeData.flashSaleModule.itemList" :key="index">
                      <div class="word">
-                      <span>海外制造商</span>
-                      <span>9.9元上新</span>
+                      <span>现价{{item.activityPrice}}</span>
+                      <span>原价{{item.originPrice}}</span>
+                      <img :src="item.picUrl" alt="">
                      </div>
                     </div>
-                      <div class="item2 item">
-                        <div class="word">
-                            <span>CK制造商</span>
-                            <span>29.9元起</span>
-                        </div>
-                          </div>
-                          <div class="item3 item">
-                            <div class="word">
-                                <span>新秀丽制造商</span>
-                                <span>159元起</span>
-                            </div>
-                          </div>
-                          <div class="item4 item">
-                            <div class="word">
-                                <span>Armani制造商</span>
-                                <span>199元起</span>
-                            </div>
-                          </div>
-                    
                   </div>
                 </div>
               <div class="options-index4">
@@ -328,48 +222,65 @@
 import BScroll from "better-scroll"
 import Swiper from "swiper"
 import'swiper/dist/css/swiper.css'
+import {reqHomeData} from "../../api/index"
+import{mapState} from "vuex"
   export default {
     data(){
       return{
         isshow:false,// 标识变量，切换全部频道列表的显示隐藏，默认为false
-        isactive:true //标识变量，点击当前项显示下划线，
+        isactive:true ,//标识变量，点击当前项显示下划线，
+        listData:[],// 头部导航数据数组
+        listarr1:[],//用于保存切割的数组
+        listarr2:[],//用于保存切割的数组
+        currentindex:0//当前的下标值
+
       }
     },
-    mounted(){
-      this.getwidth()
-      // console.log(this.getwidth())
-      if(this.getwidth()){
+   
+    async mounted(){
+      
+      await this.$store.dispatch("getHomeData")
+      //模拟导航列表数据
+      this.listData = ['推荐','居家生活','服饰鞋包','美食酒水','个护清洁','母婴亲子','运动旅行','数码家电','全球特色']
+      this.$nextTick(()=>{
+        this.getwidth()
         let scroll = new BScroll(".warpper",{
         scrollX: true,
         click:true
-      })
+        })
         let scroll2 = new BScroll(".tablist",{
         scrollX: true,
         click:true
+        })
+      let {homeData} = this
+      this.listarr1 = homeData.categoryHotSellModule.categoryList.slice(0,2)
+      this.listarr2 = homeData.categoryHotSellModule.categoryList.slice(2)
+
       })
-      }
+      
        var mySwiper = new Swiper ('.swiper-container', {
-        // direction: 'vertical', // 垂直切换选项
-        loop: true, // 循环模式选项
-        
+        loop: true, // 循环模式选项  
         // 如果需要分页器
         pagination: {
           el: '.swiper-pagination',
         },
-  })        
+  })
       
     },
+    computed:{
+      ...mapState(['homeData'])
+    },
     methods:{
+      //切换遮罩层和全部频道的方法
       showlist(){
         this.isshow = !this.isshow
       },
       
-      //动态获取头部ul的宽度的方法
+      //动态获取滑动列表的宽度的方法
       getwidth(){
         //底部滑动列表的宽度
         let listItemNode = this.$refs.listitemnode
         let listChildNode = listItemNode.children
-        console.log(listChildNode)
 
         let listItemNodeWidth = 0
         Array.prototype.forEach.call(listChildNode,(item)=>{
@@ -377,22 +288,20 @@ import'swiper/dist/css/swiper.css'
         })
         listItemNode.style.width =listItemNodeWidth + 'px'
 
-//头部滑动列表的宽度
+        //头部滑动列表的宽度
         let ulNode = this.$refs.ulnode
-        let liNode = ulNode.children
+        this. liNode = ulNode.children
         let ulNodeWidth = 0
-        Array.prototype.forEach.call(liNode,(item)=>{
+        Array.prototype.forEach.call(this.liNode,(item)=>{
           ulNodeWidth+=item.clientWidth
         })
         ulNode.style.width =ulNodeWidth + 'px'
         return ulNodeWidth
       },
       //点击当前列表项更换样式
-      // clickcurrent(e){
-      //   console.log(e)
-      //   e.target
-        
-      // }
+      clickcurrent(index){
+      this.currentindex = index
+      }
     }
   }
 </script>
@@ -411,9 +320,6 @@ import'swiper/dist/css/swiper.css'
         width 100%
         height 45px
         background #fff
-        // position fixed
-
-        // background skyblue
         display flex
         align-items: center
         padding 5px 20px
@@ -445,7 +351,7 @@ import'swiper/dist/css/swiper.css'
           // white-space nowrap
 
           .headerTab
-            // display flex
+            display flex
             align-items center
             height 40px
             // width 780px
@@ -465,11 +371,8 @@ import'swiper/dist/css/swiper.css'
                 color red
                 border-bottom 2px solid red
         .icon         
-          // float right
-          // position relative
           color #333
           .iconfont
-            // background skyblue 
             position absolute
             right 20px
             top 13px
@@ -480,12 +383,9 @@ import'swiper/dist/css/swiper.css'
           // 全部频道页面
         .alltablist  
           width 100%
-          // height 200px
           position absolute
           z-index 6
           background #fff
-          // height 150px
-          // background skyblue 
           padding 15px
           .alltablist-title
             font-size 15px            
@@ -511,14 +411,9 @@ import'swiper/dist/css/swiper.css'
       height 100%
       background rgba(0,0,0,.5)
       z-index 5
-      
-      // position absolute
-      // bottom 0
-
 
     .content
       margin-top 95px
-      // position absolute
       padding-bottom 50px
       top 0
       .swiper-container
@@ -528,27 +423,9 @@ import'swiper/dist/css/swiper.css'
               display block
               width 100%
               height 200px
-      //   width 100%
-      //   height 200px
-      // .scrollImg
-      //   width 100%
-      //   height 200px
-      //   img 
-      //     width 100%
-      //     height 200px
-      //   .imglist
-      //     position relative
-      //     .imgItem
-      //       position absolute
-      //       top 0
-      //       left 0
-      //       img 
-      //         width 100%
-      //         height 200px
       .middleTitle
         width 100%
         height 40px
-        // background skyblue 
         font-size 12px
         
         span 
@@ -625,7 +502,7 @@ import'swiper/dist/css/swiper.css'
               display inline-block
               margin 20px 0 0 10px
           .item2
-            background #E1FFFF
+            // background #E1FFFF
             width 50%
             height 250px
             display flex
@@ -646,8 +523,8 @@ import'swiper/dist/css/swiper.css'
                 margin 10px 10px 0 0 
               
              
-            .item-bottom
-              background	#7FFFA
+            .item-i
+              background #E1FFFF
               margin-top  5px
               height 120px
               .word
@@ -678,9 +555,11 @@ import'swiper/dist/css/swiper.css'
           display flex
           flex-wrap wrap
           .item 
-            width 175px
+            width 170px
             height 140px
             background-size 100% 100%
+            margin 0 5px 5px 0
+            
             .word
               display flex
               flex-direction column
@@ -738,31 +617,17 @@ import'swiper/dist/css/swiper.css'
               width 24%
               height 90px
               background #eeeeee
-              margin 5px 4px 0 0 
+              margin 5px 3px 0 0 
               text-align center
               font-size 14px
               padding-top 10px
               background-size 100%
               background-position 0 25px
               background-repeat no-repeat
-            .item3
-              background-image url(https://yanxuan-item.nosdn.127.net/15aaef3c3dd497fccb91358885a5ba0f.png?imageView&quality=65&thumbnail=200x200)
-            .item4
-              background-image url(https://yanxuan-item.nosdn.127.net/e37656ecad9a2494f456e222fe7800a2.png?imageView&quality=65&thumbnail=200x200)
-            .item5
-              background-image url(https://yanxuan-item.nosdn.127.net/63967eb40b0af505f1fd066442952bab.png?imageView&quality=65&thumbnail=200x200)
-            .item6
-              margin-right 0px
-              background-image url(https://yanxuan-item.nosdn.127.net/e5474a8f4fd5748079e2ba2ead806b51.png?imageView&quality=65&thumbnail=200x200)
-            .item7
-              background-image url(https://yanxuan-item.nosdn.127.net/d9376c059ce15a774199e2cedc5a8d63.png?imageView&quality=65&thumbnail=200x200)
-            .item8
-              background-image url(https://yanxuan-item.nosdn.127.net/06388e29fad0b7e8a9d6b1f398e5dcd3.png?imageView&quality=65&thumbnail=200x200)
-            .item9
-              background-image url(https://yanxuan-item.nosdn.127.net/74662d24f6d217b520178c5a6d031457.png?imageView&quality=65&thumbnail=200x200)
-            .item10
-              background-image url(https://yanxuan.nosdn.127.net/4f2eb96a4636205ad21a115f0bf43761.png?imageView&quality=65&thumbnail=200x200)
-              margin-right 0px
+              img
+                width 100%
+                height 70px
+            
 
       .options-index4
         width 100%
@@ -800,6 +665,41 @@ import'swiper/dist/css/swiper.css'
                 background #eeeeee
               span
                 margin-bottom 5px
+      .options-index5
+        width 100%
+        padding 10px
+        box-sizing border-box
+        border-bottom 10px solid #eee
+        .header
+          width 100%
+          height 40px
+          font-size 16px
+          position relative
+          line-height 40px
+          .more
+            position absolute
+            right 30px
+            font-size 14px
+        .imgitem
+          display flex
+          flex-wrap wrap
+          .item 
+            width 170px
+            height 140px
+            background-size 100% 100%
+            margin 0 5px 5px 0
+            background #eee
+
+            img
+              width 170px
+              height 110px
+            .word
+              display flex
+              flex-direction column
+              align-items center
+              margin-top 10px
+              font-size 14px    
+
       .footer
         width 100%
         height 120px

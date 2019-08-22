@@ -15,10 +15,10 @@
             <div class="phonelogin logincontent" v-show="isphone">
                <div class="form">
                    <div class="phone">
-                     <input v-validate="'required|email'" name="field" v-model="phonevalue" ref="phoneinput" @blur="regrule(1)" type="text" placeholder="请输入手机号">
+                     <input v-model="phonevalue" ref="phoneinput" @blur="regrule(1)" @change="regx" type="text" placeholder="请输入手机号">
                    </div>
                     <div class="getcode">
-                    <input v-model="msgvalue" ref="msginput" @blur="regrule(2)" type="text" placeholder="请输入短信验证码">
+                    <input v-model="msgvalue" ref="msginput" @blur="regrule(2)" @change="regx" type="text" placeholder="请输入短信验证码">
                     <span @click="getcode">{{timeCount == 0?'获取验证码':`${timeCount} s`}}</span>
                     </div>
                   </div>
@@ -28,7 +28,8 @@
                        <span>使用密码验证登录</span>
                      </p>
                        <input class="btn" type="submit" value="登录"
-                        @click="pass(1,'phone')"
+                        @click="login(1)"
+                        :disabled ='phoneNumber&&codeNumber'
                        />
                        <p class="last-p">
                          <input type="checkbox">
@@ -42,11 +43,13 @@
              <div class="emaillogin logincontent" v-show="isemail">
                <div class="form">
                    <div class="phone">
-                     <input type="text" placeholder="邮箱账号" v-model="emailValue" @blur="regrule(3)">
+                     <input v-validate = "'required|regemail'" name="email" type="text" placeholder="邮箱账号" v-model="emailValue">
                    </div>
+                   <span style="color:red;font-size:14px;">{{errors.first("email")}}</span>
                      <div class="getcode">
-                     <input type="password" placeholder="密码" v-model="pwdValue" @blur="regrule(4)">
+                     <input v-validate="{required:true,regex:/^[0-9]\d{4}$/}" name="password" type="password" placeholder="密码" v-model="pwdValue">
                      </div>
+                     <span style="color:red;font-size:14px;">{{errors.first("password")}}</span>
                    </div>
                    <div class="commit">
                      <p class="first-p">
@@ -54,7 +57,7 @@
                        <span>忘记密码</span>
                      </p>
                        <input class="btn" type="submit"
-                        @click="pass(2,'email')"
+                        @click="login(2)"
                          value="登录"/>
                    </div>
                    <div class="otherlogin" @click="otherlogin">
@@ -106,11 +109,13 @@ Vue.use(Toast.name,Toast)
         //密码
         pwdValue:'',
         //按钮可点击
-        phonepass:false,
-        emailpass:false
+        phoneNumber:true,
+        codeNumber:true
       }
     },
+    
     methods:{
+      //切换登录的方式
       changeloginway(loginway){
         this.selectlogin = !this.selectlogin
         if(loginway == 1){
@@ -119,6 +124,7 @@ Vue.use(Toast.name,Toast)
           this.isphone = !this.isphone
         }
       },
+      //点击其他登录方式时调用
       otherlogin(){
         this.isphone = this.isemail = this.selectlogin = true
       },
@@ -165,10 +171,6 @@ Vue.use(Toast.name,Toast)
             });
 
           }
-        }else if(type == 3){
-          //邮箱验证
-        }else if(type == 4){
-          //密码验证
         }
       },
       //获取验证码方法
@@ -189,13 +191,24 @@ Vue.use(Toast.name,Toast)
         }, 1000);
 
       },
-      pass(commit,way){
-        if(commit == 1 && way == "phone"){
-          this.$router.replace('/personal')
-        }else if(commit == 2 && way == "email"){
+      //点击登录，验证通过进入个人中心
+      async login(type){
+        if(type == 2){
+          let names = ["email","password"]
+        let success = await this.$validator.validateAll(names)
+        if(success){
           this.$router.replace('/personal')
         }
-      }
+        }else if(type == 1){
+          this.$router.replace('/personal')
+        }
+        
+      },
+      //判断输入的手机和验证码是否合法
+      regx(){
+        this.phoneNumber = /^1[3456789]\d{9}$/.test(this.phonevalue)?false:true
+        this.codeNumber = /^[0-9]\d{3}$/.test(this.msgvalue)?false:true
+        }
     }
     
   }

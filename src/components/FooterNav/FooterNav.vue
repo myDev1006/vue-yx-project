@@ -10,7 +10,7 @@
               <i class="iconfont icon-icon"></i>
               <span>分类</span>
             </li>
-            <li @click="go('/scan')" :class="{active:$route.path == '/scan'}">
+            <li @click="go('/scan')" :class="{active:$route.path=='/scan'||$route.path =='/scan/find'||$route.path =='/scan/selecthome'}">
               <i class="iconfont icon-tupian1"></i>
               <span>识物</span>
             </li>           
@@ -34,7 +34,6 @@
       }
     },
     mounted(){
-      console.log(this.$route.meta)
     },
     methods:{
       go(path){
